@@ -39,7 +39,8 @@ public class DeliveryTest {
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
         $("[data-test-id='success-notification'] .notification__content")
         .shouldBe(visible, Duration.ofSeconds(15))
-                .shouldHave(exactText("Встреча успешно забронирована на " + firstMeetingDate));
+                .shouldHave(exactText("Встреча успешно забронирована на " + firstMeetingDate))
+                .shouldBe(visible);
 
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(secondMeetingDate);
