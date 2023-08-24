@@ -1,8 +1,6 @@
 package ru.netology;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -16,11 +14,12 @@ import static com.codeborne.selenide.Selenide.open;
 
 
 public class DeliveryTest {
-  @BeforeEach
-   void setup() {open("http://localhost:9999");}
-    private Faker faker;
+    @BeforeEach
+    public void openLocalhost() {
+        open("http://localhost:9999");
+    }
+
     @Test
-    @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
 
         var validUser = DataGenerator.Registration.generateUser("ru");
@@ -38,8 +37,7 @@ public class DeliveryTest {
         $(byText("Запланировать")).click();
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
         $("[data-test-id='success-notification'] .notification__content")
-        .shouldBe(visible, Duration.ofSeconds(15))
-                .shouldHave(exactText("Встреча успешно забронирована на " + firstMeetingDate))
+                .shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate))
                 .shouldBe(visible);
 
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
@@ -55,4 +53,3 @@ public class DeliveryTest {
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
     }
 }
-
